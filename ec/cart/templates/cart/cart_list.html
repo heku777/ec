@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'cart/cart_list.css' %}">
+{% endblock %}
+
+{% block title %}
+    カート
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">商品画像</th>
+                    <th scope="col">商品名</th>
+                    <th scope="col">商品価格</th>
+                    <th scope="col">商品個数</th>
+                    {% if cart_item.product_number < cart_item.product.stock %}
+                        <th>＋</th>
+                        <th>ー</th>
+                        <th>削除</th>
+                    {% else %}
+                        <th>＋</th>
+                        <th>ー</th>
+                        <th>削除</th>
+                    {% endif %}
+                    <th scope="col">合計金額</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_item in cart_items %}
+                    <tr>
+                        <td><img class="cart-img img-fluid" src="{{ cart_item.product.thumbnail.url }}" height="300" alt=""></td>
+                        <td>{{ cart_item.product.name }}</td>
+                        <td>¥ {{ cart_item.product.price }}</td>
+                        <td>{{ cart_item.product_number }}個</td>
+                        {% if cart_item.product_number < cart_item.product.stock %}
+                            <td>
+                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a">
+                                    <i class="fas fa-plus-circle custom_icon"></i>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}">
+                                    <i class="fas fa-minus-circle custom_icon"></i>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                                <a href="{% url 'cart:full_remove' cart_item.product.id %}">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td></td>
+                            <td>
+                                &nbsp;
+                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custom_a">
+                                    <i class="fas fa-minus-circle custom_icon"></i>
+                                </a>
+                            </td>
+                            <td>
+                                &nbsp;
+                                <a href="{% url 'cart:full_remove' cart_item.product.id %}" class="custom_item">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        {% endif %}
+                        <td>¥ {{ cart_item.price_tax }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h1 class="total-price">合計金額: ¥ {{ total }}</h1>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Delete Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h1>{{ object.title }}</h1>
+            <p>{{ object.content }}</p>
+            <p>{{ object.deadline }}</p>
+            <p>本当に削除しますか？</p>
+            <input type="submit" value="削除">
+            <a href="{% url 'shop:shop_list' %}" class="btn btn-info" tabindex="-1" role="button" aria-disabled="true">一覧に戻る</a>
+        </form>
+    </div>
+{% endblock %}

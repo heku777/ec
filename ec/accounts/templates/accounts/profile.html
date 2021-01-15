@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    プロフィール
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <img src="{{ user.profile.profile_image.url }}" alt="">
+        <h3>名前:{{ user.username }}</h3>
+        <h3>メールアドレス:{{ user.email }}</h3>
+    </div>
+{% endblock %}

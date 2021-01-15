@@ -1,0 +1,33 @@
+{% extends "base.html"%}
+{% load static %}
+
+{% block title %}
+    ログイン
+{% endblock%}
+
+{% block content%}
+    <div class="container">
+        <div class="row">
+            <div class="my-div-style">
+                <h1>Loh In</h1>
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name}}"
+                               value="{{ redirect_field_value}}">
+                    {% endif %}
+                    <button type="submit" class="btn btn-success">ログイン</button>
+                    <p>
+                        <a href="{% url 'account_reset_password' %}" class="button secondaryAction">
+                            パスワードを忘れましたか?
+                        </a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock%}
+
